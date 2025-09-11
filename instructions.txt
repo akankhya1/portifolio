@@ -1,0 +1,352 @@
+portfolio_project/
+│── manage.py
+│── requirements.txt
+│── pytest.ini
+│── README.md
+│── Dockerfile
+│── docker-compose.yml
+│
+├── portfolio_project/          # Django project
+│   │── __init__.py
+│   │── settings.py
+│   │── urls.py
+│   │── wsgi.py
+│   │── asgi.py
+│   │── views.py
+│
+├── api/                        # Django app
+│   │── __init__.py
+│   │── admin.py
+│   │── apps.py
+│   │── models.py
+│   │── serializers.py
+│   │── views.py
+│   │── urls.py
+│   │── tests/
+│   │   │── __init__.py
+│   │   │── test_api.py
+│   │   │── test_models.py
+│   │   │── test_views.py
+│   │── migrations/
+│       │── __init__.py
+│       │── 0001_initial.py
+│       │── 0002_auto_add_sample_projects.py
+│
+├── ui/
+│   ├── templates/
+│   │   │── home.html
+│   └── static/
+│       ├── css/
+│       │   └── style.css
+│       └── js/
+│           └── script.js
+│
+├── scripts/
+│   │── start_server.sh
+│   │── stop_server.sh
+│   │── run_tests.sh
+│   │── backup_db.sh
+│
+├── logs/
+│   │── app.log
+│
+└── docs/
+    │── architecture.md
+    │── api_endpoints.md
+    │── setup_instructions.md 
+
+Open your terminal and run:
+
+# create folder
+mkdir portfolio_project && cd portfolio_project
+
+# create virtual environment
+python -m venv venv
+source venv/bin/activate   # On Windows use: venv\Scripts\activate
+
+# install Django & dependencies
+pip install django djangorestframework psycopg2-binary pytest pytest-django gunicorn
+
+# create requirements.txt
+pip freeze > requirements.txt
+
+# start Django project
+django-admin startproject portfolio_project .
+
+
+Now your base project is ready.
+
+🚀 Step 2: Create API App
+python manage.py startapp api
+
+🚀 Step 3: Create UI App
+python manage.py startapp ui
+
+🚀 Step 4: Directory Structure
+
+Now arrange like this (adding missing files manually):
+
+portfolio_project/
+│── manage.py
+│── requirements.txt
+│── pytest.ini
+│── README.md
+│── Dockerfile
+│── docker-compose.yml
+│
+├── portfolio_project/          # Django project
+│   │── __init__.py
+│   │── settings.py
+│   │── urls.py
+│   │── wsgi.py
+│   │── asgi.py
+│   │── views.py
+│
+├── api/                        # Django app (for backend API)
+│   │── __init__.py
+│   │── admin.py
+│   │── apps.py
+│   │── models.py
+│   │── serializers.py
+│   │── views.py
+│   │── urls.py
+│   │── tests/
+│   │   │── __init__.py
+│   │   │── test_api.py
+│   │   │── test_models.py
+│   │   │── test_views.py
+│   │── migrations/
+│       │── __init__.py
+│       │── 0001_initial.py
+│       │── 0002_auto_add_sample_projects.py
+│
+├── ui/                         # Django app (for frontend)
+│   │── templates/
+│   │   │── home.html
+│   └── static/
+│       ├── css/
+│       │   └── style.css
+│       └── js/
+│           └── script.js
+│
+├── scripts/
+│   │── start_server.sh
+│   │── stop_server.sh
+│   │── run_tests.sh
+│   │── backup_db.sh
+│
+├── logs/
+│   │── app.log
+│
+└── docs/
+    │── architecture.md
+    │── api_endpoints.md
+    │── setup_instructions.md
+
+🚀 Step 5: Important Files
+✅ requirements.txt
+Django==4.2
+djangorestframework==3.14.0
+gunicorn==21.2.0
+psycopg2-binary==2.9.9
+pytest==7.4.0
+pytest-django==4.5.2
+
+✅ pytest.ini
+[pytest]
+DJANGO_SETTINGS_MODULE = portfolio_project.settings
+python_files = tests.py test_*.py *_tests.py
+
+✅ README.md
+# Portfolio Project
+
+This is my personal portfolio project built with Django, DRF, and Docker.  
+
+## Features
+- Django backend API
+- UI frontend with HTML, CSS, JS
+- PostgreSQL database
+- Dockerized setup
+- Tests with Pytest
+- Scripts for automation
+
+## Run Locally
+```bash
+python manage.py migrate
+python manage.py runserver
+
+Run with Docker
+docker-compose up --build
+
+
+---
+
+# 🚀 Step 6: API App  
+
+### models.py
+```python
+from django.db import models
+
+class Project(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    link = models.URLField(blank=True)
+
+    def __str__(self):
+        return self.title
+
+serializers.py
+from rest_framework import serializers
+from .models import Project
+
+class ProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project
+        fields = '__all__'
+
+views.py
+from rest_framework import generics
+from .models import Project
+from .serializers import ProjectSerializer
+
+class ProjectListCreate(generics.ListCreateAPIView):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+
+urls.py
+from django.urls import path
+from .views import ProjectListCreate
+
+urlpatterns = [
+    path('projects/', ProjectListCreate.as_view(), name='project-list'),
+]
+
+🚀 Step 7: UI App
+templates/ui/home.html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Naveen | Portfolio</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <h1>Welcome to My Portfolio</h1>
+    <p>I am a Python Django Developer.</p>
+    <button onclick="loadProjects()">Load Projects</button>
+    <ul id="projects"></ul>
+
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>
+
+static/css/style.css
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+}
+h1 {
+    color: navy;
+}
+
+static/js/script.js
+async function loadProjects() {
+    let response = await fetch('/api/projects/');
+    let data = await response.json();
+    let list = document.getElementById('projects');
+    list.innerHTML = "";
+    data.forEach(project => {
+        let li = document.createElement('li');
+        li.textContent = project.title + " - " + project.description;
+        list.appendChild(li);
+    });
+}
+
+🚀 Step 8: Tests
+api/tests/test_api.py
+import pytest
+from django.urls import reverse
+from rest_framework.test import APIClient
+from api.models import Project
+
+@pytest.mark.django_db
+def test_project_list():
+    client = APIClient()
+    Project.objects.create(title="Test Project", description="Testing")
+    response = client.get(reverse('project-list'))
+    assert response.status_code == 200
+    assert len(response.data) == 1
+
+🚀 Step 9: Scripts
+scripts/start_server.sh
+#!/bin/bash
+python manage.py migrate
+python manage.py runserver
+
+scripts/stop_server.sh
+#!/bin/bash
+pkill -f runserver
+
+scripts/run_tests.sh
+#!/bin/bash
+pytest -v
+
+scripts/backup_db.sh
+#!/bin/bash
+pg_dump -U postgres portfolio_db > backup.sql
+
+🚀 Step 10: Docker
+Dockerfile
+FROM python:3.11-slim
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "portfolio_project.wsgi:application"]
+
+docker-compose.yml
+version: '3.9'
+
+services:
+  web:
+    build: .
+    command: gunicorn --bind 0.0.0.0:8000 portfolio_project.wsgi:application
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: portfolio_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+    ports:
+      - "5432:5432"
+
+🚀 Step 11: Docs
+docs/architecture.md
+# Architecture
+- Django REST API (api app)
+- UI app serving HTML + static files
+- PostgreSQL database
+- Dockerized deployment
+
+docs/api_endpoints.md
+# API Endpoints
+GET /api/projects/ - List all projects
+POST /api/projects/ - Add a new project
+
+docs/setup_instructions.md
+# Setup Instructions
+1. Clone repo
+2. Create virtual environment
+3. Install requirements
+4. Run migrations
+5. Start server
