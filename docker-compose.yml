@@ -43,12 +43,17 @@
 
 
 
-version: "3.9"
+# version: "3.9"
 
 services:
   web:
     build: .
-    command: gunicorn --bind 0.0.0.0:8000 portfoilo_project.wsgi:application --env DJANGO_SETTINGS_MODULE=portfoilo_project.settings.prod
+    command: >
+      sh -c "python manage.py migrate &&
+             gunicorn --bind 0.0.0.0:8000 portfolio_project.wsgi:application --env DJANGO_SETTINGS_MODULE=portfolio_project.settings.prod"
+    # command: gunicorn --bind 0.0.0.0:8000 portfoilo_project.wsgi:application --env DJANGO_SETTINGS_MODULE=portfoilo_project.settings.prod
+    
+
     volumes:
       - .:/app
     ports:
@@ -65,3 +70,20 @@ services:
       POSTGRES_DB: portfolio_db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?err}
+
+
+
+
+# web:
+#   build: .
+#   command: >
+#     sh -c "python manage.py migrate &&
+#            gunicorn --bind 0.0.0.0:8000 portfolio_project.wsgi:application --env DJANGO_SETTINGS_MODULE=portfolio_project.settings.prod"
+#   volumes:
+#     - .:/app
+#   ports:
+#     - "8000:8000"
+#   depends_on:
+#     - db
+#   environment:
+#     DJANGO_ENV: production
