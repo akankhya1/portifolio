@@ -50,7 +50,7 @@ services:
     build: .
     command: >
       sh -c "python manage.py migrate &&
-             gunicorn --bind 0.0.0.0:8000 portfolio_project.wsgi:application --env DJANGO_SETTINGS_MODULE=portfolio_project.settings.prod"
+             gunicorn --bind 0.0.0.0:8000 portfoilo_project.wsgi:application --env DJANGO_SETTINGS_MODULE=portfoilo_project.settings.prod"
     # command: gunicorn --bind 0.0.0.0:8000 portfoilo_project.wsgi:application --env DJANGO_SETTINGS_MODULE=portfoilo_project.settings.prod
     
 
