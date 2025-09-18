@@ -20,7 +20,7 @@
 
 # services:
 #   web:
-#     build: .
+#     build: .s
 #     command: gunicorn --bind 0.0.0.0:8000 portfoilo_project.wsgi:application
 #     volumes:
 #       - .:/app
@@ -65,12 +65,12 @@ services:
       DJANGO_ENV: production
       # In prod you set secrets in environment, NOT in .env file
 
-  db:
-    image: postgres:15
-    environment:
-      POSTGRES_DB: portfolio_db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?err}
+  # db:
+  #   image: postgres:15
+  #   environment:
+  #     POSTGRES_DB: portfolio_db
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?err}
 
 
 
