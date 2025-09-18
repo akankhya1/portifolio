@@ -149,6 +149,7 @@ Django settings for portfoilo_project project.
 
 from pathlib import Path
 import os
+import dj_database_url
 from dotenv import load_dotenv
 
 # Load environment variables from .env (only for local)
@@ -213,16 +214,37 @@ WSGI_APPLICATION = 'portfoilo_project.wsgi.application'
 # -----------------------------------------------------------------------------
 # Database
 # -----------------------------------------------------------------------------
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv("POSTGRES_DB", "portfolio_db"),
-        'USER': os.getenv("POSTGRES_USER", "postgres"),
-        'PASSWORD': os.getenv("POSTGRES_PASSWORD", "1234"),
-        'HOST': os.getenv("POSTGRES_HOST", "db"),   # "db" for Docker, otherwise set in Render
-        'PORT': os.getenv("POSTGRES_PORT", "5432"),
+
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+if DATABASE_URL:
+    # Production or Render
+    DATABASES = {
+        "default": dj_database_url.parse(DATABASE_URL, conn_max_age=600)
     }
-}
+else:
+    # Local Docker/Postgres or dev
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.getenv("POSTGRES_DB", "portfolio_db"),
+            "USER": os.getenv("POSTGRES_USER", "postgres"),
+            "PASSWORD": os.getenv("POSTGRES_PASSWORD", "1234"),
+            "HOST": os.getenv("POSTGRES_HOST", "db"),  # "db" for docker-compose
+            "PORT": os.getenv("POSTGRES_PORT", "5432"),
+        }
+    }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv("POSTGRES_DB", "portfolio_db"),
+#         'USER': os.getenv("POSTGRES_USER", "postgres"),
+#         'PASSWORD': os.getenv("POSTGRES_PASSWORD", "1234"),
+#         'HOST': os.getenv("POSTGRES_HOST", "db"),   # "db" for Docker, otherwise set in Render
+#         'PORT': os.getenv("POSTGRES_PORT", "5432"),
+#     }
+# }
 
 # -----------------------------------------------------------------------------
 # Password validation
