@@ -90,9 +90,9 @@ COPY . /app/
 EXPOSE 8000
 
 # Copy entrypoint script
-COPY entrypoint.sh /app/entrypoint.sh
-RUN chmod +x /app/entrypoint.sh
-
-# Use entrypoint script
-ENTRYPOINT ["/app/entrypoint.sh"]
+# Run migrations, collect static files, then start Gunicorn
+# Using sh -c to chain commands
+CMD sh -c "python manage.py migrate --noinput && \
+           python manage.py collectstatic --noinput && \
+           gunicorn --bind 0.0.0.0:8000 portfoilo_project.wsgi:application --env DJANGO_SETTINGS_MODULE=portfoilo_project.settings.prod"
 
