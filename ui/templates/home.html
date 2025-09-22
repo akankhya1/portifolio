@@ -1,16 +1,101 @@
-{% load static %}
+{% comment %} {% load static %}
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Naveen | Portfolio</title>
+    <title>Akankhya | Portfolio</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
     <h1>Welcome to My Portfolio</h1>
-    <p>I am a Python Django Developer.</p>
+    <p>I am a Python Full Stack Developer.</p>
     <button onclick="loadProjects()">Load Projects</button>
     <ul id="projects"></ul>
 
     <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html> {% endcomment %}
+{% comment %}  {% endcomment %}
+
+
+{% comment %} ========================================================================= {% endcomment %}
+
+
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Akankhya Panda | Portfolio</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<!-- Hero Section -->
+<section id="hero">
+    <div class="container">
+        {% comment %} <img src="{% static 'images/profile.jpg' %}" alt="Akankhya Panda" class="profile-pic"> {% endcomment %}
+        <h1>Hi, I'm Akankhya Panda</h1>
+        <p>Python Full Stack Developer | Django | React | AI/NLP Solutions</p>
+        <a href="#projects" class="btn">View Projects</a>
+        {% comment %} <a href="{% static 'docs/Akankhya_Resume.pdf' %}" class="btn" target="_blank">Download Resume</a> {% endcomment %}
+    </div>
+</section>
+
+<!-- About Me Section -->
+<section id="about">
+    <div class="container">
+        <h2>About Me</h2>
+        <p>Innovative Full Stack Developer with 3.5+ years experience building intelligent web applications using Django, React, and AI/ML technologies. I specialize in creating scalable, data-driven systems that solve real-world problems.</p>
+    </div>
+</section>
+
+<!-- Skills Section -->
+<section id="skills">
+    <div class="container">
+        <h2>Skills</h2>
+        <div class="skills-grid">
+            <div class="skill">Python</div>
+            <div class="skill">Django / DRF</div>
+            <div class="skill">React / JavaScript / HTML / CSS</div>
+            <div class="skill">Docker / CI/CD</div>
+            <div class="skill">AI / NLP</div>
+            <div class="skill">PostgreSQL / MySQL / MongoDB</div>
+        </div>
+    </div>
+</section>
+
+<!-- Projects Section -->
+<section id="projects">
+    <div class="container">
+        <h2>Projects</h2>
+        <button onclick="loadProjects()">Load Projects</button>
+        <div id="projects-list" class="projects-grid">
+            <!-- Project cards will be dynamically loaded here -->
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact">
+    <div class="container">
+        <h2>Contact Me</h2>
+        <p>Email: <a href="mailto:akankhya.1@gmail.com">akankhya.1@gmail.com</a></p>
+        <p>LinkedIn: <a href="https://linkedin.com/in/akankhya" target="_blank">linkedin.com/in/akankhya</a></p>
+        <p>GitHub: <a href="https://github.com/yourusername/portfolio" target="_blank">github.com/yourusername/portfolio</a></p>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <p>&copy; 2025 Akankhya Panda. All rights reserved.</p>
+    </div>
+</footer>
+
+<!-- JS -->
+<script src="{% static 'js/script.js' %}"></script>
+
+
 </body>
 </html>
