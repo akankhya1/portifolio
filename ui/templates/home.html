@@ -1,100 +1,84 @@
-{% comment %} {% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Akankhya | Portfolio</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<body>
-    <h1>Welcome to My Portfolio</h1>
-    <p>I am a Python Full Stack Developer.</p>
-    <button onclick="loadProjects()">Load Projects</button>
-    <ul id="projects"></ul>
-
-    <script src="{% static 'js/script.js' %}"></script>
-</body>
-</html> {% endcomment %}
-{% comment %}  {% endcomment %}
-
-
-{% comment %} ========================================================================= {% endcomment %}
-
-
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Akankhya Panda | Portfolio</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
 
 <!-- Hero Section -->
-<section id="hero">
+<section class="bg-light py-5 text-center">
     <div class="container">
-        {% comment %} <img src="{% static 'images/profile.jpg' %}" alt="Akankhya Panda" class="profile-pic"> {% endcomment %}
-        <h1>Hi, I'm Akankhya Panda</h1>
-        <p>Python Full Stack Developer | Django | React | AI/NLP Solutions</p>
-        <a href="#projects" class="btn">View Projects</a>
-        {% comment %} <a href="{% static 'docs/Akankhya_Resume.pdf' %}" class="btn" target="_blank">Download Resume</a> {% endcomment %}
+        <img src="{% static 'images/profile.jpg' %}" class="rounded-circle mb-3" alt="Akankhya Panda" width="150">
+        <h1 class="display-5">Hi, I'm Akankhya Panda</h1>
+        <p class="lead">Python Full Stack Developer | Django | React | AI/NLP Solutions</p>
+        <a href="/projects" class="btn btn-primary me-2">View Projects</a>
+        {% comment %} <a href="{% static 'docs/Akankhya_Resume.pdf' %}" target="_blank" class="btn btn-outline-secondary">Download Resume</a> {% endcomment %}
     </div>
 </section>
 
-<!-- About Me Section -->
-<section id="about">
+<!-- About Section -->
+<section id="about" class="py-5">
     <div class="container">
-        <h2>About Me</h2>
+        <h2 class="mb-4">About Me</h2>
         <p>Innovative Full Stack Developer with 3.5+ years experience building intelligent web applications using Django, React, and AI/ML technologies. I specialize in creating scalable, data-driven systems that solve real-world problems.</p>
     </div>
 </section>
 
 <!-- Skills Section -->
-<section id="skills">
+<section id="skills" class="bg-light py-5">
     <div class="container">
-        <h2>Skills</h2>
-        <div class="skills-grid">
-            <div class="skill">Python</div>
-            <div class="skill">Django / DRF</div>
-            <div class="skill">React / JavaScript / HTML / CSS</div>
-            <div class="skill">Docker / CI/CD</div>
-            <div class="skill">AI / NLP</div>
-            <div class="skill">PostgreSQL / MySQL / MongoDB</div>
+        <h2 class="mb-4">Skills</h2>
+        <div class="row g-3">
+            <div class="col-md-4"><span class="badge bg-primary p-2 w-100">Python</span></div>
+            <div class="col-md-4"><span class="badge bg-primary p-2 w-100">Django / DRF</span></div>
+            <div class="col-md-4"><span class="badge bg-primary p-2 w-100">React / JS / HTML / CSS</span></div>
+            <div class="col-md-4"><span class="badge bg-primary p-2 w-100">Docker / CI/CD</span></div>
+            <div class="col-md-4"><span class="badge bg-primary p-2 w-100">AI / NLP</span></div>
+            <div class="col-md-4"><span class="badge bg-primary p-2 w-100">PostgreSQL / MySQL / MongoDB</span></div>
         </div>
     </div>
 </section>
 
 <!-- Projects Section -->
-<section id="projects">
+<section id="projects" class="py-5">
     <div class="container">
-        <h2>Projects</h2>
-        <button onclick="loadProjects()">Load Projects</button>
-        <div id="projects-list" class="projects-grid">
-            <!-- Project cards will be dynamically loaded here -->
+        <h2 class="mb-4">Projects</h2>
+        <button class="btn btn-primary mb-4" onclick="loadProjects()">Load Projects</button>
+        <div id="projects-list" class="row g-4">
+            <!-- Project cards loaded dynamically -->
         </div>
     </div>
 </section>
 
 <!-- Contact Section -->
-<section id="contact">
+<section id="contact" class="bg-light py-5">
     <div class="container">
-        <h2>Contact Me</h2>
-        <p>Email: <a href="mailto:akankhya.1@gmail.com">akankhya.1@gmail.com</a></p>
-        <p>LinkedIn: <a href="https://linkedin.com/in/akankhya" target="_blank">linkedin.com/in/akankhya</a></p>
-        <p>GitHub: <a href="https://github.com/yourusername/portfolio" target="_blank">github.com/yourusername/portfolio</a></p>
+        <h2 class="mb-4">Contact Me</h2>
+        <ul class="list-unstyled">
+            <li>Email: <a href="mailto:akankhya.1@gmail.com">akankhya.1@gmail.com</a></li>
+            <li>LinkedIn: <a href="https://linkedin.com/in/akankhya" target="_blank">linkedin.com/in/akankhya</a></li>
+            <li>GitHub: <a href="https://github.com/akankhya1/portfolio" target="_blank">github.com/akankhya1/portfolio</a></li>
+        </ul>
     </div>
 </section>
 
 <!-- Footer -->
-<footer>
+<footer class="py-3 text-center bg-dark text-light">
     <div class="container">
-        <p>&copy; 2025 Akankhya Panda. All rights reserved.</p>
+        <p class="mb-0">&copy; 2025 Akankhya Panda. All rights reserved.</p>
     </div>
 </footer>
 
-<!-- JS -->
-<script src="{% static 'js/script.js' %}"></script>
+<!-- Bootstrap JS + Dependencies -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Custom JS -->
 
 
 </body>
