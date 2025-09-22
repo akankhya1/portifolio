@@ -94,5 +94,5 @@ EXPOSE 8000
 # Using sh -c to chain commands
 CMD sh -c "python manage.py migrate --noinput && \
            python manage.py collectstatic --noinput && \
-           gunicorn --bind 0.0.0.0:8000 portfoilo_project.wsgi:application --env DJANGO_SETTINGS_MODULE=portfoilo_project.settings.prod"
+           gunicorn --bind 0.0.0.0:8000 portfoilo_project.wsgi:application --env DJANGO_SETTINGS_MODULE=portfoilo_project.settings"
 
